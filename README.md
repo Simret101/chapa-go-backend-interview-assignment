@@ -1,8 +1,5 @@
 
----
-
-```markdown
-# 🏦 Chapa Backend Clone API
+# Chapa Backend Clone API
 
 This is a Go-based backend service that replicates core functionalities of the Chapa payment API, including transactions, transfers, and secure webhook handling using clean architecture principles.
 
@@ -18,10 +15,8 @@ This is a Go-based backend service that replicates core functionalities of the C
 - ✅ Clean architecture (Domain, Usecases, Controllers, Repositories)
 
 ---
-
-## 📁 Folder Structure
-
 ```
+## 📁 Folder Structure
 
 ├── api
 │   ├── controllers
@@ -32,15 +27,12 @@ This is a Go-based backend service that replicates core functionalities of the C
 │       ├── routes.go
 │       ├── transaction.routes.go
 │       └── transfer.routes.go
-│
-├── cmd
-│   ├── main.go
-│   └── .env
-│
+│   ├── cmd
+│   │   ├── main.go
+│   │   └── .env
 ├── docs
-│   ├── Chapa Backend.postman\_collection.json
+│   ├── Chapa Backend.postman_collection.json
 │   └── Documentation.MD
-│
 ├── internal
 │   ├── domain
 │   │   ├── transaction.go
@@ -56,13 +48,12 @@ This is a Go-based backend service that replicates core functionalities of the C
 │   └── usecases
 │       ├── transaction.usecase.go
 │       └── transfer.usecase.go
-│
 ├── migration
 ├── mocks
 ├── pkg
 │   └── config
-│       ├── error definitions
-│       └── redis caching setup
+│       ├── error.go
+│       └── cache.go
 ├── scripts
 ├── storage
 ├── tmp
@@ -72,7 +63,7 @@ This is a Go-based backend service that replicates core functionalities of the C
 ├── Dockerfile
 └── README.md
 
-````
+```
 
 ---
 
@@ -168,9 +159,5 @@ go run ./cmd/main.go
 Access API: `http://localhost:8080/api/v0`
 
 ---
-
-## 📝 License
-
-MIT License
 
 ```
