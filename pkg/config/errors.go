@@ -6,11 +6,10 @@ import (
 )
 
 var (
-	// Config and Env
+
 	ErrInvalidSMTPPort     = errors.New("invalid SMTP_PORT: must be an integer")
 	ErrMissingEnvVariables = errors.New("missing required environment variables")
 
-	// Payment
 	ErrInvalidWebhookSignature = errors.New("invalid webhook signature")
 	ErrInvalidPaymentData      = errors.New("invalid payment payload structure")
 	ErrTransactionNotFound     = errors.New("transaction not found")
@@ -19,7 +18,7 @@ var (
 	ErrUnsupportedCurrency     = errors.New("unsupported currency")
 	ErrWebhookTimeout          = errors.New("webhook processing timed out")
 
-	// User/Auth
+	
 	ErrInvalidEmailFormat   = errors.New("invalid email format")
 	ErrEmailAlreadyExists   = errors.New("email already registered")
 	ErrUserNotFound         = errors.New("user not found")
@@ -28,9 +27,10 @@ var (
 	ErrJWTSigningFailed     = errors.New("failed to sign JWT")
 	ErrUnauthorizedAccess   = errors.New("unauthorized access")
 
-	// Misc
 	ErrInternalServer = errors.New("internal server error")
 	ErrBadRequest     = errors.New("bad request")
+
+	ErrUnsupportedWebhookEvent = errors.New("unsupported webhook event")
 )
 
 func GetStatusCode(err error) int {

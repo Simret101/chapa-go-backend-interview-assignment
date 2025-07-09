@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "d2aeba14-153f-4bfd-adfe-aefdb304b6ec",
+		"name": "Chapa Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42403797",
+		"_collection_link": "https://group-5-1665.postman.co/workspace/451f04ee-b216-4fbf-aa7c-6d9c6e10bcba/collection/42403797-d2aeba14-153f-4bfd-adfe-aefdb304b6ec?action=share&source=collection_link&creator=42403797"
+	},
+	"item": [
+		{
+			"name": "Transfer_webhook_handler",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Chapa-Signature",
+						"value": "dfc8a7c39522c9042862590898e2727448b734451d628667c5d09fe018d2982a",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"event\": \"transfer.success\",\r\n    \"status\": \"success\",\r\n    \"transfer_ref\": \"transfer12345\",\r\n    \"amount\": 500.00,\r\n    \"currency\": \"ETB\",\r\n    \"recipient_email\": \"recipient@example.com\",\r\n    \"description\": \"Transfer for order #123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v0/transfers/webhook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v0",
+						"transfers",
+						"webhook"
+					]
+				},
+				"description": "### Transfer Webhook API\n\nThis endpoint is designed to handle incoming webhook notifications for successful transfers. It allows the system to receive and process information about completed transfer events.\n\n#### HTTP Method\n\n- `POST`\n    \n\n#### Endpoint\n\n- `http://localhost:8080/api/v0/transfers/webhook`\n    \n\n#### Request Parameters\n\nThe request body should be in JSON format and include the following parameters:\n\n- **event** (string): The type of event being reported. For successful transfers, this should be set to `\"transfer.success\"`.\n    \n- **status** (string): The current status of the transfer. Expected value is `\"success\"`.\n    \n- **transfer_ref** (string): A unique reference identifier for the transfer.\n    \n- **amount** (number): The amount of money transferred.\n    \n- **currency** (string): The currency in which the transfer was made (e.g., \"ETB\").\n    \n- **recipient_email** (string): The email address of the recipient of the transfer.\n    \n- **description** (string): A description of the transfer, providing context (e.g., \"Transfer for order #123\").\n    \n\n#### Expected Response\n\nUpon successful processing of the webhook notification, the API will respond with:\n\n- **Status Code**: `200 OK`\n    \n- **Content-Type**: `application/json`\n    \n- **Response Body**: A JSON object containing a message, which may be empty.\n    \n\nThis response indicates that the webhook notification was received and processed successfully."
+			},
+			"response": []
+		},
+		{
+			"name": "Initiate_transaction",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"txn_ref\": \"txn12345\",\r\n    \"amount\": 100.00,\r\n    \"currency\": \"ETB\",\r\n    \"customer_email\": \"customer@example.com\",\r\n    \"description\": \"Payment for order #123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v0/transactions/initiate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v0",
+						"transactions",
+						"initiate"
+					]
+				},
+				"description": "## Initiate Transaction\n\nThis endpoint is used to initiate a new transaction. It allows users to create a transaction by providing necessary details such as the transaction reference, amount, currency, customer email, and a description of the transaction.\n\n### Request\n\n**Method:** POST  \n**Endpoint:** `http://localhost:8080/api/v0/transactions/initiate`\n\n#### Request Body\n\nThe request body must be in JSON format and should include the following parameters:\n\n- **txn_ref** (string): A unique reference for the transaction. This helps in tracking the transaction.\n    \n- **amount** (number): The amount of money to be transacted.\n    \n- **currency** (string): The currency in which the transaction is made (e.g., \"ETB\").\n    \n- **customer_email** (string): The email address of the customer involved in the transaction.\n    \n- **description** (string): A brief description of the transaction, providing context or details about the payment.\n    \n\n**Example Request Body:**\n\n``` json\n{\n  \"txn_ref\": \"txn12347\",\n  \"amount\": 100,\n  \"currency\": \"ETB\",\n  \"customer_email\": \"customer@example.com\",\n  \"description\": \"Payment for order #123\"\n}\n\n ```\n\n### Response\n\nOn a successful transaction initiation, the server responds with a status code of **201 Created** and returns a JSON object containing:\n\n- **message** (string): A message indicating the result of the transaction initiation. This may be empty or contain additional information.\n    \n- **txn_ref** (string): The transaction reference that was provided in the request, confirming the transaction has been initiated.\n    \n\n**Example Response:**\n\n``` json\n{\n  \"message\": \"\",\n  \"txn_ref\": \"txn12347\"\n}\n\n ```\n\n### Notes\n\n- Ensure that all required fields are provided in the request body to avoid validation errors.\n    \n- The response will confirm the transaction initiation and provide the reference for future tracking."
+			},
+			"response": []
+		},
+		{
+			"name": "verify-transaction",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v0/transactions/verify/txn12345",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v0",
+						"transactions",
+						"verify",
+						"txn12345"
+					]
+				},
+				"description": "## Verify Transaction\n\nThis endpoint is used to verify the status of a specific transaction identified by its transaction reference.\n\n### Request\n\n- **Method**: `GET`\n    \n- **Endpoint**: `http://localhost:8080/api/v0/transactions/verify/{transaction_reference}`\n    \n\n#### Path Parameters\n\n- `transaction_reference`: A unique identifier for the transaction (e.g., `txn12347`).\n    \n\n### Response\n\nUpon a successful request, the server responds with a status code of `200` and a JSON object containing the following fields:\n\n- `id`: (integer) The unique identifier of the transaction.\n    \n- `amount`: (integer) The amount involved in the transaction.\n    \n- `currency`: (string) The currency in which the transaction was made.\n    \n- `customer_email`: (string) The email of the customer associated with the transaction.\n    \n- `txn_ref`: (string) The reference identifier for the transaction.\n    \n- `status`: (string) The current status of the transaction (e.g., pending, completed).\n    \n- `description`: (string) A brief description of the transaction.\n    \n- `created_at`: (string) The timestamp when the transaction was created.\n    \n- `updated_at`: (string) The timestamp when the transaction was last updated.\n    \n\n### Example Response\n\n``` json\n{\n  \"id\": 0,\n  \"amount\": 0,\n  \"currency\": \"\",\n  \"customer_email\": \"\",\n  \"txn_ref\": \"\",\n  \"status\": \"\",\n  \"description\": \"\",\n  \"created_at\": \"\",\n  \"updated_at\": \"\"\n}\n\n ```\n\nThis response format allows the client to easily understand the details of the transaction being verified."
+			},
+			"response": []
+		},
+		{
+			"name": "Transaction_webhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Chapa-Signature",
+						"value": "816ef3f311393ab16f0c53b342c4b8e6f01732985e4b07a84e8900a88b086944",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"event\": \"charge.success\",\r\n    \"status\": \"success\",\r\n    \"txn_ref\": \"txn12345\",\r\n    \"amount\": 100.00,\r\n    \"currency\": \"ETB\",\r\n    \"customer_email\": \"customer@example.com\",\r\n    \"description\": \"Payment for order #123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v0/transactions/webhook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v0",
+						"transactions",
+						"webhook"
+					]
+				},
+				"description": "### Webhook Transaction Notification\n\nThis endpoint is designed to receive webhook notifications related to transaction events. Specifically, it handles notifications for successful charge events, allowing the system to process and respond to payment confirmations.\n\n#### Request Format\n\n- **Method**: POST\n    \n- **URL**: `http://localhost:8080/api/v0/transactions/webhook`\n    \n- **Content-Type**: application/json\n    \n\n#### Request Body\n\nThe request body must be a JSON object containing the following parameters:\n\n- **event** (string): The type of event that occurred, e.g., `\"charge.success\"`.\n    \n- **status** (string): The status of the transaction, e.g., `\"success\"`.\n    \n- **txn_ref** (string): A unique reference for the transaction, e.g., `\"txn12345\"`.\n    \n- **amount** (number): The amount involved in the transaction, e.g., `100`.\n    \n- **currency** (string): The currency in which the transaction is made, e.g., `\"ETB\"`.\n    \n- **customer_email** (string): The email address of the customer involved in the transaction, e.g., `\"customer@example.com\"`.\n    \n- **description** (string): A brief description of the transaction, e.g., `\"Payment for order #123\"`.\n    \n\n#### Response Format\n\nUpon successful processing of the webhook notification, the server will respond with:\n\n- **Status Code**: 200\n    \n- **Content-Type**: application/json\n    \n- {\"message\": \"\"}\n    \n\nThis response indicates that the notification was received and processed successfully.\n\nEnsure that the request body adheres to the specified format to avoid errors in processing the webhook notification."
+			},
+			"response": []
+		},
+		{
+			"name": "initiate_transfer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"transfer_ref\": \"transfer12345\",\r\n    \"account\": \"123456789\",\r\n    \"amount\": 500.00,\r\n    \"bank_code\": \"ABC123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v0/transfers/initiate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v0",
+						"transfers",
+						"initiate"
+					]
+				},
+				"description": "### Initiate Transfer API\n\nThis endpoint is used to initiate a transfer between accounts.\n\n#### Request\n\n- **Method**: POST\n    \n- **Endpoint**: `http://localhost:8080/api/v0/transfers/initiate`\n    \n\n#### Request Body Parameters\n\nThe request body must be in JSON format and include the following parameters:\n\n- **transfer_ref** (string): A unique reference for the transfer.\n    \n- **account** (string): The account number from which the transfer will be made.\n    \n- **amount** (number): The amount of money to be transferred.\n    \n- **bank_code** (string): The code of the bank to which the transfer is directed.\n    \n\nExample Request Body:\n\n``` json\n{\n  \"transfer_ref\": \"transfer12385\",\n  \"account\": \"123456789\",\n  \"amount\": 500,\n  \"bank_code\": \"ABC123\"\n}\n\n ```\n\n#### Response\n\nOn a successful request, the API will return a response with the following format:\n\n- **Status**: 201 Created\n    \n- **Content-Type**: application/json\n    \n\nResponse Body:\n\n``` json\n{\n  \"message\": \"\",\n  \"transfer_ref\": \"\"\n}\n\n ```\n\nThe response will include a message and the transfer reference that was used to initiate the transfer."
+			},
+			"response": []
+		},
+		{
+			"name": "verify-transfer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v0/transfers/verify/transfer12345",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v0",
+						"transfers",
+						"verify",
+						"transfer12345"
+					]
+				},
+				"description": "## Verify Transfer\n\nThis endpoint is used to verify a specific transfer by its unique reference ID.\n\n### Request\n\n- **Method:** `GET`\n    \n- **Endpoint:** `http://localhost:8080/api/v0/transfers/verify/{transfer_ref}`\n    \n- **Parameters:**\n    \n    - `transfer_ref` (path parameter): The unique reference ID of the transfer you wish to verify. In this example, the reference ID is `transfer12385`.\n        \n\n### Response\n\nUpon a successful request, the server responds with a status code of `200` and returns a JSON object containing the following fields:\n\n- `id` (integer): The unique identifier for the transfer.\n    \n- `transfer_ref` (string): The reference ID of the transfer.\n    \n- `account` (string): The account associated with the transfer.\n    \n- `amount` (integer): The amount involved in the transfer.\n    \n- `bank_code` (string): The code of the bank handling the transfer.\n    \n- `status` (string): The current status of the transfer.\n    \n- `created_at` (string): The timestamp when the transfer was created.\n    \n- `updated_at` (string): The timestamp when the transfer was last updated.\n    \n\n### Example Response\n\n``` json\n{\n  \"id\": 0,\n  \"transfer_ref\": \"\",\n  \"account\": \"\",\n  \"amount\": 0,\n  \"bank_code\": \"\",\n  \"status\": \"\",\n  \"created_at\": \"\",\n  \"updated_at\": \"\"\n}\n\n ```\n\nEnsure to replace `{transfer_ref}` with the actual reference ID of the transfer you wish to verify when making the request."
+			},
+			"response": []
+		}
+	]
+}
