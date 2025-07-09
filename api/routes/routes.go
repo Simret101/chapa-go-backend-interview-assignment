@@ -7,7 +7,10 @@ import (
 	"gorm.io/gorm"
 )
 
-func SetupRoutes(r *gin.RouterGroup, config *config.Config, database *gorm.DB) {
-	// Auth routes
+func SetupRoutes(r *gin.RouterGroup, cfg *config.Config, db *gorm.DB) {
+
+	SetupTransactionGroup(r.Group("/transactions"), db)
+
+	SetupTransferGroup(r.Group("/transfers"), db)
 
 }
